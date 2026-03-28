@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="doc_editor.css">
+</head>
+<body>
+
+<!-- Toolbar -->
+<div class="toolbar">
+  <div class="group">
+    <select id="fontFamily" onchange="execCmd('fontName', this.value)">
+      <option value="Arial">Arial</option>
+      <option value="Times New Roman">Times New Roman</option>
+      <option value="Calibri">Calibri</option>
+      <option value="Verdana">Verdana</option>
+      <option value="Georgia">Georgia</option>
+      <option value="Courier New">Courier New</option>
+      <option value="Trebuchet MS">Trebuchet MS</option>
+      <option value="Comic Sans MS">Comic Sans MS</option>
+    </select>
+  </div>
+  <div class="group">
+    <button onclick="changeFontSize(-1)">A−</button>
+    <input type="number" id="fontSize" value="12" min="1" max="200" onchange="applyFontSize(this.value)">
+    <button onclick="changeFontSize(1)">A+</button>
+  </div>
+  <div class="group">
+    <button id="btn-bold"      onclick="toggleFmt('bold')"><b>B</b></button>
+    <button id="btn-italic"    onclick="toggleFmt('italic')"><i>I</i></button>
+    <button id="btn-underline" onclick="toggleFmt('underline')"><u>U</u></button>
+    <button id="btn-strike"    onclick="toggleFmt('strikeThrough')"><s>S</s></button>
+  </div>
+  <div class="group">
+    <button id="btn-left"   onclick="doAlign('justifyLeft')">⬛◻◻</button>
+    <button id="btn-center" onclick="doAlign('justifyCenter')">◻⬛◻</button>
+    <button id="btn-right"  onclick="doAlign('justifyRight')">◻◻⬛</button>
+    <button id="btn-full"   onclick="doAlign('justifyFull')">☰</button>
+  </div>
+  <div class="group">
+    <button onclick="execCmd('insertUnorderedList')">• List</button>
+    <button onclick="execCmd('insertOrderedList')">1. List</button>
+    <button onclick="execCmd('indent')">→|</button>
+    <button onclick="execCmd('outdent')">|←</button>
+  </div>
+  <div class="group">
+    <label>A</label>
+    <input type="color" value="#000000" onchange="execCmd('foreColor', this.value)">
+    <label>🖍</label>
+    <input type="color" value="#ffff00" onchange="execCmd('hiliteColor', this.value)">
+  </div>
+  <div class="group">
+    <button onclick="execCmd('undo')">↺</button>
+    <button onclick="execCmd('redo')">↻</button>
+  </div>
+  <div class="group">
+    <button onclick="execCmd('removeFormat')">T✕</button>
+  </div>
+</div>
+
+<!-- Title bar -->
+<div class="title-bar">
+  <a href="let1.html" class="back-link">← Docs</a>
+  <input type="text" class="doc-title-input" id="doc-title" value="Untitled document"
+         onchange="saveDoc()" onblur="saveDoc()">
+  <span class="autosave-note" id="autosave-note">All changes saved</span>
+  <button class="save-btn" onclick="saveDoc(); showSaved()">Save</button>
+</div>
+
+<!-- Pages -->
+<div class="page-container" id="page-container"></div>
+<div id="page-counter">Page 1</div>
+
+<script src="doc_editor.js"></script>
+</body>
+</html>

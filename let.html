@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Main Page</title>
+<link rel="stylesheet" href="style1.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="card" style="position: relative; overflow: visible;">
+    <h2> Letters About You</h2>
+    <p>Words And Thoughts About You. 𐔌՞ ܸ.ˬ.ܸ՞𐦯 </p>
+
+        <button onclick="openPin()">Go to Page 2</button>
+    </a>
+</div>
+<!-- PIN POPUP -->
+<div class="pin-popup hidden" id="pinPopup">
+
+<h3>Enter Passcode</h3>
+
+<div id="display">--/--/--</div>
+<p id="errorMsg"></p>
+<div class="keypad">
+
+<button onclick="press(1)">1</button>
+<button onclick="press(2)">2</button>
+<button onclick="press(3)">3</button>
+
+<button onclick="press(4)">4</button>
+<button onclick="press(5)">5</button>
+<button onclick="press(6)">6</button>
+
+<button onclick="press(7)">7</button>
+<button onclick="press(8)">8</button>
+<button onclick="press(9)">9</button>
+
+<button onclick="clearPin()">C</button>
+<button onclick="press(0)">0</button>
+<button onclick="checkPin()">OK</button>
+
+</div>
+
+</div>
+
+<canvas id="confetti-canvas" 
+        style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;"></canvas>
+<!-- Confetti library -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<!-- Your custom JS -->
+<script src="let1.js"></script>
+
+</body>
+</html>

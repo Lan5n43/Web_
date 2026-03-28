@@ -1,0 +1,340 @@
+   * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      background: url('27771233ffd5cc45625e3ff061a208aa.jpg') no-repeat center center fixed;
+      background-size: cover;
+      font-family: Arial, sans-serif;
+    }
+
+    /* ── Top bar ── */
+    .topbar {
+      background: #c8e6ad;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .topbar-title {
+      font-family: 'Pacifico', cursive;
+      font-size: 22px;
+      color: #3a5a2a;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .topbar-title span { font-size: 26px; }
+
+    .back {
+      display: inline-block;
+      padding: 8px 18px;
+      font-size: 13px;
+      background-color: #9dcc7a;
+      color: #222;
+      border: none;
+      border-radius: 8px;
+      font-family: 'Pacifico', cursive;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      text-decoration: none;
+    }
+    .back:hover { background-color: #b5d99a; }
+
+    /* ── Main area ── */
+    .main {
+      max-width: 1100px;
+      margin: 36px auto;
+      padding: 0 20px;
+    }
+
+    /* ── "Start a new document" strip (like Google Docs) ── */
+    .new-section {
+      background: rgba(255,255,255,0.88);
+      border-radius: 14px;
+      padding: 20px 28px;
+      margin-bottom: 36px;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.10);
+    }
+
+    .section-label {
+      font-size: 13px;
+      color: #555;
+      margin-bottom: 14px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .template-row {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    /* Blank / template card */
+    .template-card {
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .template-thumb {
+      width: 110px;
+      height: 142px;
+      background: white;
+      border: 2px solid #d9d9d9;
+      border-radius: 4px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 38px;
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .template-card:hover .template-thumb {
+      border-color: #9dcc7a;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+      transform: translateY(-3px);
+    }
+
+    /* Lined paper lines on the blank thumb */
+    .template-thumb.lined::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        to bottom,
+        transparent,
+        transparent 17px,
+        #e0e7d0 17px,
+        #e0e7d0 18px
+      );
+      border-radius: 2px;
+    }
+
+    .template-thumb .plus-icon {
+      position: relative;
+      z-index: 2;
+      font-size: 42px;
+      color: #9dcc7a;
+      font-weight: 300;
+      line-height: 1;
+    }
+
+    .template-name {
+      font-size: 12px;
+      color: #333;
+      text-align: center;
+    }
+
+    /* ── Recent docs section ── */
+    .recent-section {
+      background: rgba(255,255,255,0.88);
+      border-radius: 14px;
+      padding: 20px 28px;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.10);
+    }
+
+    .recent-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+
+    .doc-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    /* Existing doc card */
+    .doc-card {
+      cursor: pointer;
+      background: white;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      transition: box-shadow 0.2s, transform 0.15s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .doc-card:hover {
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+      transform: translateY(-3px);
+    }
+
+    .doc-preview-thumb {
+      height: 140px;
+      background: #f9f9f9;
+      border-bottom: 1px solid #ececec;
+      padding: 12px 14px;
+      overflow: hidden;
+      font-size: 7px;
+      line-height: 1.5;
+      color: #555;
+      font-family: Arial, sans-serif;
+      position: relative;
+    }
+
+    .doc-preview-thumb::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 30px;
+      background: linear-gradient(transparent, #f9f9f9);
+    }
+
+    .doc-card-footer {
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .doc-icon {
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+
+    .doc-meta {
+      overflow: hidden;
+    }
+
+    .doc-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #222;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .doc-date {
+      font-size: 11px;
+      color: #888;
+      margin-top: 1px;
+    }
+
+    /* ── New doc dialog ── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+
+    .modal {
+      background: white;
+      border-radius: 14px;
+      padding: 32px 36px;
+      width: 380px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.25);
+      animation: popIn 0.18s ease;
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.88); opacity: 0; }
+      to   { transform: scale(1);    opacity: 1; }
+    }
+
+    .modal h3 {
+      font-family: 'Pacifico', cursive;
+      color: #3a5a2a;
+      margin-bottom: 18px;
+      font-size: 20px;
+    }
+
+    .modal input[type="text"] {
+      width: 100%;
+      border: 2px solid #c8e6ad;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 15px;
+      font-family: Arial, sans-serif;
+      outline: none;
+      margin-bottom: 20px;
+      transition: border-color 0.2s;
+    }
+
+    .modal input[type="text"]:focus { border-color: #9dcc7a; }
+
+    .modal-btns {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+
+    .btn-cancel {
+      padding: 9px 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background: white;
+      cursor: pointer;
+      font-size: 14px;
+      color: #555;
+      transition: background 0.15s;
+    }
+    .btn-cancel:hover { background: #f0f0f0; }
+
+    .btn-create {
+      padding: 9px 22px;
+      border: none;
+      border-radius: 8px;
+      background: #9dcc7a;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      color: #2a4a18;
+      transition: background 0.15s;
+      font-family: 'Pacifico', cursive;
+    }
+    .btn-create:hover { background: #b5d99a; }
+
+    /* ── Flowers ── */
+    #flower-container {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 5;
+    }
+    .flower {
+      position: absolute;
+      bottom: -60px;
+      background-image: url('680ca64edbb6c409dac1c3d2043e383a-removebg-preview.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      animation: floatUp linear forwards;
+      opacity: 0.75;
+    }
+    @keyframes floatUp {
+      0%   { transform: translateY(0) rotate(0deg); opacity: 0; }
+      10%  { opacity: 0.8; }
+      100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      color: #999;
+      padding: 30px 0;
+      font-size: 14px;
+    }
+    .empty-state .big { font-size: 36px; margin-bottom: 10px; }

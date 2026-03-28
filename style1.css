@@ -1,0 +1,105 @@
+body
+{ 
+    margin:0; 
+    height:100vh; 
+    display:flex; 
+    justify-content:center; 
+    align-items:center;
+    font-family:'Pacifico', cursive;
+    background-image: url(meow.gif);
+    background-size: cover;
+}
+
+/* Card */
+.card{
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    padding:40px;
+    border-radius:15px;
+    text-align:center;
+    width:250px;
+    height:auto;
+}
+
+/* Button */
+button{
+    padding:12px 25px;
+    font-size:16px;
+    margin:5px;
+    background-color: #c8e6ad;
+    color:rgb(0, 0, 0);
+    border:none;
+    border-radius:8px;
+  
+    cursor:pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover{
+    background-color:#e5f4ce;
+}
+
+/* Keypad layout */
+.keypad{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin-top:20px;
+}
+
+/* Password display */
+#display{
+    font-size:24px;
+    letter-spacing:10px;
+    margin-top:10px;
+}
+
+.pin-popup{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:rgba(255,255,255,0.9);
+padding:30px;
+border-radius:15px;
+text-align:center;
+width:250px;
+}
+
+
+/* Hidden content */
+.hidden{
+    display:none;
+}
+
+.keypad{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:10px;
+margin-top:15px;
+}
+
+#display{
+font-size:24px;
+letter-spacing:8px;
+margin-bottom:10px;
+}
+#errorMsg{
+color:red;
+font-size:14px;
+margin-top:8px;
+height:18px;
+}
+
+@keyframes shake {
+  0% { transform: translate(-50%, -50%) translateX(0); }
+  20% { transform: translate(-50%, -50%) translateX(-10px); }
+  40% { transform: translate(-50%, -50%) translateX(10px); }
+  60% { transform: translate(-50%, -50%) translateX(-10px); }
+  80% { transform: translate(-50%, -50%) translateX(10px); }
+  100% { transform: translate(-50%, -50%) translateX(0); }
+}
+
+.shake {
+  animation: shake 0.5s;
+}

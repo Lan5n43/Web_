@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Letters</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+   <link rel="stylesheet" href="style3.css" />
+</head>
+<body>
+
+<!-- Top bar -->
+<div class="topbar">
+  <div class="topbar-title">
+    <span></span> My Letters
+  </div>
+  <a href="let.html" class="back">← Back</a>
+</div>
+
+<!-- Main content -->
+<div class="main">
+
+  <!-- ── New document strip ── -->
+  <div class="new-section">
+    <div class="section-label">Start a new document</div>
+    <div class="template-row">
+
+      <!-- Blank -->
+      <div class="template-card" onclick="openNewDocModal()" title="Create blank document">
+        <div class="template-thumb lined">
+          <span class="plus-icon">+</span>
+        </div>
+        <div class="template-name">Blank document</div>
+      </div>
+
+      <!-- Letter 1 shortcut -->
+      <div class="template-card" onclick="window.location.href='doc1sample.html'" title="Open Letter 1">
+        <div class="template-thumb" style="padding:10px; font-size:8px; line-height:1.5; color:#555; text-align:left; justify-content:flex-start; align-items:flex-start;">
+          <div style="font-family:'Pacifico',cursive; font-size:11px; color:#3a5a2a; margin-bottom:6px;">Letter 1</div>
+          <div style="color:#888; font-size:7px; line-height:1.6;">
+            Start typing your<br>letter here…<br><br>
+            ——————————<br>
+            ——————————<br>
+            ——————<br><br>
+            ——————————<br>
+            ————————
+          </div>
+        </div>
+        <div class="template-name">Letter 1</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── Recent / saved docs ── -->
+  <div class="recent-section">
+    <div class="recent-header">
+      <div class="section-label" style="margin:0;">Recent documents</div>
+    </div>
+
+    <div class="doc-grid" id="doc-grid">
+      <!-- Populated by JS from localStorage -->
+    </div>
+  </div>
+
+</div>
+
+<!-- ── New doc modal ── -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModalOnOverlay(event)">
+  <div class="modal">
+    <h3>New Document</h3>
+    <input type="text" id="doc-name-input" placeholder="Document title (e.g. Letter 2)"
+           maxlength="60" onkeydown="if(event.key==='Enter')createNewDoc()">
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn-create" onclick="createNewDoc()">Create</button>
+    </div>
+  </div>
+</div>
+
+<!-- Flowers -->
+<div id="flower-container"></div>
+<script src="let3.js"></script>
+</body>
+</html>

@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Letter 1</title>
+  <link rel="stylesheet" href="style4.css" />
+  <style>
+    /* ── Layout ── */
+    body { margin: 0; padding: 0; }
+
+    .page-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 0 80px;
+      gap: 24px;
+    }
+
+    .page-wrapper {
+      position: relative;
+    }
+
+    .page-number {
+      text-align: center;
+      color: #888;
+      font-size: 11px;
+      margin-bottom: 5px;
+      font-family: Arial, sans-serif;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .document {
+      width: 700px;
+      height: 900px;        /* fixed height so overflow is detected */
+      background: white;
+      padding: 70px 80px;
+      box-shadow: 0 2px 18px rgba(0,0,0,0.22);
+      border-radius: 2px;
+      outline: none;
+      line-height: 1.6;
+      font-size: 12pt;
+      font-family: Arial, sans-serif;
+      box-sizing: border-box;
+      overflow: hidden;
+      caret-color: #222;
+    }
+
+    .document:focus {
+      box-shadow: 0 2px 28px rgba(0,0,0,0.3);
+    }
+
+    /* ── Toolbar ── */
+    .toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      gap: 3px;
+      padding: 5px 10px;
+      background: #c8e6ad;
+      align-items: center;
+      flex-wrap: wrap;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+    }
+
+    .group {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      padding-right: 8px;
+      border-right: 1px solid #aac890;
+    }
+    .group:last-child { border-right: none; }
+
+    .toolbar button {
+      background: transparent;
+      color: #333;
+      border: 1px solid transparent;
+      padding: 3px 7px;
+      cursor: pointer;
+      border-radius: 4px;
+      font-size: 13px;
+      min-width: 26px;
+      font-family: Arial, sans-serif;
+      transition: background 0.12s;
+    }
+    .toolbar button:hover  { background: #b5d99a; border-color: #8fbf70; }
+    .toolbar button.active { background: #9dcc7a; border-color: #6fa84f; font-weight: bold; }
+
+    .toolbar select,
+    .toolbar input[type="number"] {
+      padding: 2px 4px;
+      border-radius: 4px;
+      border: 1px solid #aac890;
+      background: white;
+      font-size: 13px;
+      cursor: pointer;
+      height: 26px;
+      font-family: Arial, sans-serif;
+    }
+    #fontFamily { width: 130px; }
+    #fontSize   { width: 50px; text-align: center; }
+
+    .toolbar input[type="color"] {
+      width: 26px;
+      height: 26px;
+      border: 1px solid #aac890;
+      border-radius: 4px;
+      cursor: pointer;
+      padding: 1px;
+      background: white;
+    }
+    .toolbar label {
+      font-size: 11px;
+      color: #444;
+      font-family: Arial, sans-serif;
+    }
+
+    /* ── Back button ── */
+    .back {
+      display: inline-block;
+      padding: 7px 16px;
+      font-size: 13px;
+      background-color: #c8e6ad;
+      color: #333;
+      border: none;
+      border-radius: 8px;
+      font-family: Arial, sans-serif;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      text-decoration: none;
+      position: fixed;
+      top: 48px;
+      right: 18px;
+      z-index: 1000;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+    .back:hover { background-color: #e5f4ce; }
+
+    /* ── Page counter ── */
+    #page-counter {
+      position: fixed;
+      bottom: 18px;
+      right: 18px;
+      background: rgba(0,0,0,0.45);
+      color: white;
+      font-size: 12px;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-family: Arial, sans-serif;
+      z-index: 200;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+<a href="let1.html"><button class="back">← Back</button></a>
+
+<!-- ── Toolbar ── -->
+<div class="toolbar" id="toolbar">
+
+  <div class="group">
+    <select id="fontFamily" onchange="execCmd('fontName', this.value)" title="Font">
+      <option value="Arial">Arial</option>
+      <option value="Times New Roman">Times New Roman</option>
+      <option value="Calibri">Calibri</option>
+      <option value="Verdana">Verdana</option>
+      <option value="Georgia">Georgia</option>
+      <option value="Courier New">Courier New</option>
+      <option value="Trebuchet MS">Trebuchet MS</option>
+      <option value="Comic Sans MS">Comic Sans MS</option>
+      <option value="Impact">Impact</option>
+    </select>
+  </div>
+
+  <div class="group">
+    <button onclick="changeFontSize(-1)" title="Smaller">A−</button>
+    <input type="number" id="fontSize" value="12" min="1" max="200"
+           onchange="applyFontSize(this.value)" title="Font size (pt)">
+    <button onclick="changeFontSize(1)" title="Larger">A+</button>
+  </div>
+
+  <div class="group">
+    <button id="btn-bold"      onclick="toggleFmt('bold')"          title="Bold (Ctrl+B)"><b>B</b></button>
+    <button id="btn-italic"    onclick="toggleFmt('italic')"        title="Italic (Ctrl+I)"><i>I</i></button>
+    <button id="btn-underline" onclick="toggleFmt('underline')"     title="Underline (Ctrl+U)"><u>U</u></button>
+    <button id="btn-strike"    onclick="toggleFmt('strikeThrough')" title="Strikethrough"><s>S</s></button>
+  </div>
+
+  <div class="group">
+    <button id="btn-left"   onclick="doAlign('justifyLeft')"   title="Left">⬛◻◻</button>
+    <button id="btn-center" onclick="doAlign('justifyCenter')" title="Center">◻⬛◻</button>
+    <button id="btn-right"  onclick="doAlign('justifyRight')"  title="Right">◻◻⬛</button>
+    <button id="btn-full"   onclick="doAlign('justifyFull')"   title="Justify">☰</button>
+  </div>
+
+  <div class="group">
+    <button onclick="execCmd('insertUnorderedList')" title="Bullet list">• List</button>
+    <button onclick="execCmd('insertOrderedList')"   title="Numbered list">1. List</button>
+    <button onclick="execCmd('indent')"  title="Indent">→|</button>
+    <button onclick="execCmd('outdent')" title="Outdent">|←</button>
+  </div>
+
+  <div class="group">
+    <label title="Text colour">A</label>
+    <input type="color" id="textColor" value="#000000"
+           onchange="execCmd('foreColor', this.value)" title="Text colour">
+    <label title="Highlight">🖍</label>
+    <input type="color" id="hlColor"   value="#ffff00"
+           onchange="execCmd('hiliteColor', this.value)" title="Highlight colour">
+  </div>
+
+  <div class="group">
+    <button onclick="execCmd('undo')" title="Undo (Ctrl+Z)">↺</button>
+    <button onclick="execCmd('redo')" title="Redo (Ctrl+Y)">↻</button>
+  </div>
+
+  <div class="group">
+    <button onclick="execCmd('removeFormat')" title="Clear formatting">T✕</button>
+  </div>
+
+</div>
+
+<!-- Pages render here -->
+<div class="page-container" id="page-container"></div>
+
+<div id="page-counter">Page 1</div>
+
+<!-- ── Scripts ── -->
+<script>
+/* =========================================================
+   State
+========================================================= */
+const CONTENT_HEIGHT = 760;   // px available inside a page (900 - 70*2 padding)
+const BUFFER         = 10;    // extra slack before spill
+
+let pages      = [];   // array of .document divs
+let activePage = null;
+let pageCount  = 0;
+
+/* =========================================================
+   Init
+========================================================= */
+window.addEventListener('DOMContentLoaded', () => {
+  addPage(true);                                    // first page
+  document.addEventListener('selectionchange', syncToolbar);
+  document.addEventListener('keydown', handleShortcuts);
+});
+
+/* =========================================================
+   Page factory
+========================================================= */
+function addPage(isFirst = false) {
+  pageCount++;
+  const container = document.getElementById('page-container');
+
+  const wrapper = document.createElement('div');
+  wrapper.className = 'page-wrapper';
+
+  const label = document.createElement('div');
+  label.className   = 'page-number';
+  label.textContent = 'Page ' + pageCount;
+
+  const doc = document.createElement('div');
+  doc.className       = 'document';
+  doc.contentEditable = 'true';
+  doc.spellcheck      = true;
+  doc.dataset.page    = pageCount;
+
+  if (isFirst) {
+    doc.innerHTML = '<p>Start typing your letter here…</p>';
+    let firstInput = true;
+    doc.addEventListener('focus', function clearHint() {
+      if (firstInput) {
+        doc.innerHTML = '<p><br></p>';
+        placeCaretAt(doc, 'start');
+        firstInput = false;
+      }
+      doc.removeEventListener('focus', clearHint);
+    });
+  } else {
+    doc.innerHTML = '<p><br></p>';
+  }
+
+  doc.addEventListener('focus', () => { activePage = doc; syncToolbar(); });
+  doc.addEventListener('input', () => { checkOverflow(doc); syncToolbar(); });
+  doc.addEventListener('keydown', handlePageKey);
+
+  wrapper.appendChild(label);
+  wrapper.appendChild(doc);
+  container.appendChild(wrapper);
+
+  pages.push(doc);
+  activePage = doc;
+  updateCounter();
+
+  return doc;
+}
+
+/* =========================================================
+   Overflow → spill last block to next page
+========================================================= */
+function checkOverflow(pg) {
+  const idx = pages.indexOf(pg);
+  if (idx === -1) return;
+
+  // If page is overflowing, move last block to next page
+  while (pg.scrollHeight > pg.clientHeight + BUFFER) {
+    const last = pg.lastElementChild;
+    if (!last || pg.children.length <= 1) break;   // keep at least one child
+
+    const next = pages[idx + 1] || addPage();
+
+    // Remember if caret was in the node being moved
+    const sel = window.getSelection();
+    const caretInLast = sel && sel.rangeCount &&
+                        last.contains(sel.getRangeAt(0).startContainer);
+
+    next.insertBefore(last, next.firstChild);       // move node
+
+    if (caretInLast) {
+      placeCaretAt(next, 'start');
+      next.focus();
+    }
+
+    // Recurse on next page in case IT overflows too
+    checkOverflow(next);
+  }
+
+  updateCounter();
+}
+
+/* =========================================================
+   Enter key near bottom → jump to next page
+========================================================= */
+function handlePageKey(e) {
+  if (e.key !== 'Enter') return;
+  const pg = this;
+  setTimeout(() => checkOverflow(pg), 0);
+}
+
+/* =========================================================
+   Toolbar commands
+========================================================= */
+function execCmd(cmd, val = null) {
+  focusActive();
+  document.execCommand(cmd, false, val);
+  syncToolbar();
+}
+
+function toggleFmt(cmd) { execCmd(cmd); }
+
+const alignMap = { justifyLeft:'left', justifyCenter:'center',
+                   justifyRight:'right', justifyFull:'full' };
+
+function doAlign(cmd) {
+  execCmd(cmd);
+  Object.keys(alignMap).forEach(a => {
+    const b = document.getElementById('btn-' + alignMap[a]);
+    if (b) b.classList.remove('active');
+  });
+  const b = document.getElementById('btn-' + alignMap[cmd]);
+  if (b) b.classList.add('active');
+}
+
+/* Font size */
+function applyFontSize(val) {
+  const size = parseFloat(val);
+  if (!size || size < 1) return;
+  focusActive();
+  const sel = window.getSelection();
+  if (sel && sel.rangeCount && !sel.isCollapsed) {
+    try {
+      const range = sel.getRangeAt(0);
+      const span  = document.createElement('span');
+      span.style.fontSize = size + 'pt';
+      range.surroundContents(span);
+    } catch(e) { fallbackSize(size); }
+  } else {
+    fallbackSize(size);
+  }
+  syncToolbar();
+}
+
+function fallbackSize(size) {
+  document.execCommand('fontSize', false, '7');
+  document.querySelectorAll('font[size="7"]').forEach(f => {
+    f.removeAttribute('size');
+    f.style.fontSize = size + 'pt';
+  });
+}
+
+function changeFontSize(delta) {
+  const inp = document.getElementById('fontSize');
+  let v = parseFloat(inp.value) || 12;
+  v = Math.max(1, Math.min(200, v + delta));
+  inp.value = v;
+  applyFontSize(v);
+}
+
+/* =========================================================
+   Toolbar state sync (bold/italic active state, font display)
+========================================================= */
+function syncToolbar() {
+  ['bold','italic','underline'].forEach(cmd => {
+    const btn = document.getElementById('btn-' + cmd);
+    if (btn) btn.classList.toggle('active', document.queryCommandState(cmd));
+  });
+  // strikethrough
+  const st = document.getElementById('btn-strike');
+  if (st) st.classList.toggle('active', document.queryCommandState('strikeThrough'));
+
+  // Font size readback
+  const sel = window.getSelection();
+  if (sel && sel.rangeCount) {
+    const node = sel.getRangeAt(0).startContainer;
+    const el   = node.nodeType === 3 ? node.parentElement : node;
+    if (el && el.tagName) {
+      const cs = window.getComputedStyle(el);
+      const pxSize = parseFloat(cs.fontSize);
+      if (!isNaN(pxSize)) {
+        const ptSize = Math.round(pxSize * 0.75);
+        document.getElementById('fontSize').value = ptSize;
+      }
+      const ff = cs.fontFamily.split(',')[0].replace(/['"]/g,'').trim();
+      const dd = document.getElementById('fontFamily');
+      if (dd) {
+        for (const opt of dd.options) {
+          if (ff.toLowerCase() === opt.value.toLowerCase()) { dd.value = opt.value; break; }
+        }
+      }
+    }
+  }
+}
+
+/* =========================================================
+   Keyboard shortcuts
+========================================================= */
+function handleShortcuts(e) {
+  if (!e.ctrlKey && !e.metaKey) return;
+  const map = { b:'bold', i:'italic', u:'underline', z:'undo', y:'redo' };
+  const cmd = map[e.key.toLowerCase()];
+  if (cmd) { e.preventDefault(); execCmd(cmd); }
+}
+
+/* =========================================================
+   Helpers
+========================================================= */
+function focusActive() {
+  const pg = activePage || pages[0];
+  if (pg) { pg.focus(); activePage = pg; }
+}
+
+function placeCaretAt(el, pos) {
+  el.focus();
+  const range = document.createRange();
+  if (pos === 'start') { range.setStart(el, 0); range.collapse(true); }
+  else                 { range.selectNodeContents(el); range.collapse(false); }
+  const sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(range);
+}
+
+function updateCounter() {
+  document.getElementById('page-counter').textContent =
+    pageCount === 1 ? 'Page 1' : `${pageCount} pages`;
+}
+</script>
+</body>
+</html>

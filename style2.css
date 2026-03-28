@@ -1,0 +1,12 @@
+body { font-family: 'Times New Roman', Times, serif; margin: 0; padding: 0; background: white; color: #333; text-align: center;    }
+   h1, h2 { margin-bottom: 15px; } .cards-container
+  { display: grid; /* or display: flex; */ grid-template-columns: repeat(2, 1fr); /* 2 cards per row */ gap: 20px; /* Adds 20px space between all cards */ max-width: 1100px; margin:auto } 
+  .card { background: white; padding: 20px; border-radius: 10px; border: 3px solid #572020; box-shadow: 0 4px 8px rgb(68, 9, 9); text-align: left; gap: 20px; /* Adds 20px space between all cards */ } 
+  footer { background-color: #8b0000; color: white; padding: 15px; margin-top: 30px; } img { width: 100%; max-width: 400px; border-radius: 10px; border: 6px solid white; box-shadow: 0 0 0 4px #8b0000; /* Creates double border effect */ } 
+  .image-row { display: flex; justify-content: center; gap: 30px; /* space between images */ margin: 30px 0; } .center-img { width: 400px; height: auto; } body { margin: 0px; border-left: 20px solid #8b0000; /* left side */ border-right: 20px solid #8b0000; /* right side */ } 
+  
+  .small-image { width: 300px; height: auto;} 
+  .top-button 
+  { position: absolute; top: 20px; right: 40px; background-color: white; color: #8b0000; padding: 8px 18px; font-size: 15px; border-radius: 5px; text-decoration: none; font-weight: bold; transition: 0.3s; } 
+a.back-button:hover { background-color: #f4cccc; }
+header { background-color: #8b0000; color: white; padding: 30px 20px; position: relative; /* IMPORTANT */ }

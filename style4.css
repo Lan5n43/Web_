@@ -1,0 +1,171 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: url('27771233ffd5cc45625e3ff061a208aa.jpg') no-repeat center center fixed;
+      background-size: cover;
+      font-family: Arial, sans-serif;
+    }
+
+    /* ── Toolbar ── */
+    .toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      gap: 3px;
+      padding: 5px 10px;
+      background: #c8e6ad;
+      align-items: center;
+      flex-wrap: wrap;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+    }
+
+    .group {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      padding-right: 8px;
+      border-right: 1px solid #aac890;
+    }
+    .group:last-child { border-right: none; }
+
+    .toolbar button {
+      background: transparent;
+      color: #333;
+      border: 1px solid transparent;
+      padding: 3px 7px;
+      cursor: pointer;
+      border-radius: 4px;
+      font-size: 13px;
+      min-width: 26px;
+      font-family: Arial, sans-serif;
+      transition: background 0.12s;
+    }
+    .toolbar button:hover  { background: #b5d99a; border-color: #8fbf70; }
+    .toolbar button.active { background: #9dcc7a; border-color: #6fa84f; font-weight: bold; }
+
+    .toolbar select,
+    .toolbar input[type="number"] {
+      padding: 2px 4px;
+      border-radius: 4px;
+      border: 1px solid #aac890;
+      background: white;
+      font-size: 13px;
+      height: 26px;
+      font-family: Arial, sans-serif;
+    }
+    #fontFamily { width: 130px; }
+    #fontSize   { width: 50px; text-align: center; }
+
+    .toolbar input[type="color"] {
+      width: 26px; height: 26px;
+      border: 1px solid #aac890;
+      border-radius: 4px;
+      cursor: pointer;
+      padding: 1px;
+    }
+    .toolbar label { font-size: 11px; color: #444; }
+
+    /* Doc title bar */
+    .title-bar {
+      background: rgba(255,255,255,0.85);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 8px 18px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+
+    .doc-title-input {
+      border: none;
+      outline: none;
+      font-family: 'Pacifico', cursive;
+      font-size: 18px;
+      color: #333;
+      background: transparent;
+      flex: 1;
+      min-width: 0;
+    }
+    .doc-title-input:hover { border-bottom: 1px solid #c8e6ad; }
+    .doc-title-input:focus { border-bottom: 2px solid #9dcc7a; }
+
+    .save-btn {
+      padding: 6px 16px;
+      background: #9dcc7a;
+      border: none;
+      border-radius: 8px;
+      font-size: 13px;
+      cursor: pointer;
+      font-weight: 600;
+      color: #2a4a18;
+      transition: background 0.15s;
+    }
+    .save-btn:hover { background: #b5d99a; }
+
+    .back-link {
+      text-decoration: none;
+      color: #555;
+      font-size: 13px;
+      padding: 5px 10px;
+      border-radius: 6px;
+      background: #e5f4ce;
+      transition: background 0.15s;
+    }
+    .back-link:hover { background: #c8e6ad; }
+
+    .autosave-note {
+      font-size: 11px;
+      color: #aaa;
+      white-space: nowrap;
+    }
+
+    /* ── Page layout ── */
+    .page-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 0 80px;
+      gap: 24px;
+    }
+
+    .page-number {
+      text-align: center;
+      color: #888;
+      font-size: 11px;
+      margin-bottom: 5px;
+      font-family: Arial, sans-serif;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .document {
+      width: 700px;
+      height: 900px;
+      background: white;
+      padding: 70px 80px;
+      box-shadow: 0 2px 18px rgba(0,0,0,0.22);
+      border-radius: 2px;
+      outline: none;
+      line-height: 1.6;
+      font-size: 12pt;
+      font-family: Arial, sans-serif;
+      box-sizing: border-box;
+      overflow: hidden;
+      caret-color: #222;
+    }
+    .document:focus { box-shadow: 0 2px 28px rgba(0,0,0,0.3); }
+
+    /* Page counter */
+    #page-counter {
+      position: fixed;
+      bottom: 18px;
+      right: 18px;
+      background: rgba(0,0,0,0.45);
+      color: white;
+      font-size: 12px;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-family: Arial, sans-serif;
+      z-index: 200;
+      pointer-events: none;
+    }
